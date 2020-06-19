@@ -1,8 +1,7 @@
-let userCount = 0;
 const socket = io("?token=archie");
 
 // UI changes
-const updateUserCount = () => document.querySelector("footer .userCount").innerText = `${userCount} user${userCount === 1 ? "" : "s"}`;
+const updateUserCount = count => document.querySelector("footer .userCount").innerText = `${count} user${count === 1 ? "" : "s"}`;
 const setUsername = username => document.querySelector("footer .username").innerText = username;
 
 // Form Submit
@@ -15,3 +14,8 @@ form.onsubmit = e => {
     if (!message) return;
     console.log(message);
 };
+
+// User Join
+socket.on("user join", (username, count) => {
+    updateUserCount(count);
+});
