@@ -20,7 +20,7 @@ io.use((socket, next) => {
 // Socket Connection
 io.on("connection", socket => {
     // Set Color
-    socket.color = (Math.random()*0xFFFFFF<<0).toString(16);
+    socket.color = generateColor();
     
     // Change User Count
     userCount++;
@@ -87,3 +87,13 @@ app.get("/token", async (req, res) => {
         res.status(500).send("internalError");
     }
 });
+
+// Generate Color
+const generateColor = () => {
+    const chars = "456789abcde";
+    let color = "";
+    for (let i = 0; i < 6; i++) {
+        color += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return color;
+};
