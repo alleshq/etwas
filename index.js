@@ -12,27 +12,40 @@ app.use(express.static(`${__dirname}/static`));
 
 // Socket Auth
 io.use((socket, next) => {
-    const username = auth(socket.handshake.query.token);
-    if (!username) return next(new Error("Authentication Error"));
+    const {id, username} = auth(socket.handshake.query.token);
+    if (!id) return next(new Error("Authentication Error"));
+    socket.id = id;
     socket.username = username;
-    socket.color = (Math.random()*0xFFFFFF<<0).toString(16);
     next();
 });
 
 // Socket Connection
 io.on("connection", socket => {
+    // Change User Count
     userCount++;
-    io.emit("user join", socket.username, userCount);
+    io.emit("user count", socket.username, userCount, false);
+
+    // Set Color
+    socket.color = (Math.random()*0xFFFFFF<<0).toString(16);
+
+    // Leave
+    socket.on("disconnect", () => {
+        userCount--;
+        io.emit("user count", socket.username, userCount, true);
+    });
 });
 
 // Authentication with token
 const auth = token => {
     if (typeof token !== "string") return;
-    return token;
+    return {
+        id: token,
+        username: token
+    };
 };
 
 // Username endpoint
 app.get("/username", (req, res) => {
-    const username = auth(req.headers.authorization);
+    const {username} = auth(req.headers.authorization);
     res.status(username ? 200 : 401).send(username ? username : "badAuthorization");
 });

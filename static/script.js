@@ -23,7 +23,7 @@ fetch("/username", {
     document.querySelector("footer .username").innerText = await res.text();
 });
 
-// User Join
-socket.on("user join", (username, count) => {
+// User Count Update
+socket.on("user count", (username, count, leave) => {
     updateUserCount(count);
 });
