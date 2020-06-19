@@ -20,11 +20,15 @@ main {
     flex-grow: 1;
 }
 
-main .system {
+main p {
     color: #444444;
 }
 
-main .system span {
+main p.system {
+    font-style: italic;
+}
+
+main span {
     font-weight: 500;
 }
 

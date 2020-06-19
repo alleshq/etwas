@@ -39,5 +39,11 @@ socket.on("user count", (username, color, count, leave) => {
 
 // Message
 socket.on("message", (username, color, message) => {
-    console.log(`@${username}#${color}: ${message}`);
+    const p = document.createElement("p");
+    p.innerText = `: ${message}`;
+    const span = document.createElement("span");
+    span.innerText = `@${username}`;
+    span.style.color = `#${color}`;
+    p.prepend(span);
+    main.append(p);
 });
