@@ -14,7 +14,7 @@ app.use(express.static(`${__dirname}/static`));
 io.use((socket, next) => {
     const {id, username} = auth(socket.handshake.query.token);
     if (!id) return next(new Error("Authentication Error"));
-    socket.id = id;
+    socket.userId = id;
     socket.username = username;
     next();
 });
