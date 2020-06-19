@@ -1,4 +1,5 @@
 const socket = io("?token=archie");
+const main = document.querySelector("main");
 
 // Update User Count
 const updateUserCount = count => document.querySelector("footer .userCount").innerText = `${count} user${count === 1 ? "" : "s"}`;
@@ -26,6 +27,14 @@ fetch("/username", {
 // User Count Update
 socket.on("user count", (username, color, count, leave) => {
     updateUserCount(count);
+    const p = document.createElement("p");
+    p.className = "system";
+    p.innerText = ` just ${leave ? "left" : "joined"} the chat.`;
+    const span = document.createElement("span");
+    span.innerText = `@${username}`;
+    span.style.color = `#${color}`;
+    p.prepend(span);
+    main.append(p);
 });
 
 // Message

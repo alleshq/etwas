@@ -20,6 +20,14 @@ main {
     flex-grow: 1;
 }
 
+main .system {
+    color: #444444;
+}
+
+main .system span {
+    font-weight: 500;
+}
+
 footer {
     background: #f0f0f0;
     padding: 20px;
