@@ -11,8 +11,9 @@
             Authorization: getQueryVar("code")
         }
     }).then(async res => {
-        if (res.status !== 200) return document.write("Something went wrong. <a href='/app.html'>Try again</a>.");
-        localStorage.setItem("token", await res.text());
+        const data = await res.text();
+        if (res.status !== 200) return document.write(data === "plusOnly" ? "Sorry, this is only for Alles+ members." : "Something went wrong. <a href='/app.html'>Try again</a>.");
+        localStorage.setItem("token", data);
         location.href = "/app.html";
     });
 </script>

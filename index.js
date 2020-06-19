@@ -69,12 +69,15 @@ app.get("/token", async (req, res) => {
             }
         })).data;
 
-        // Get Username
-        const {username} = (await axios.get("https://api.alles.cx/v1/me", {
+        // Get User
+        const {username, plus} = (await axios.get("https://api.alles.cx/v1/me", {
             headers: {
                 authorization: `Bearer ${access_token}`
             }
         })).data;
+
+        // Only allow plus members
+        if (!plus) return res.status(400).send("plusOnly");
 
         // Generate JWT
         res.send(jwt.sign({username}, process.env.JWT_SECRET, {expiresIn: "1d"}));
