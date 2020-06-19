@@ -52,4 +52,7 @@ socket.on("message", (username, color, message) => {
     // Remove old messages
     const messages = main.querySelectorAll("p");
     if (messages.length > 100) messages[0].remove();
+
+    // Scroll
+    main.scrollTop = main.scrollHeight;
 });

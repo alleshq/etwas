@@ -19,16 +19,13 @@ a {
 main {
     flex-grow: 1;
     padding: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-flow: column;
-    justify-content: end;
+    overflow: auto;
 }
 
 main p {
     color: #444444;
     word-break: break-word;
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 main p.system {
