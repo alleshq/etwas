@@ -1,4 +1,4 @@
-const socket = io("?token=archie");
+const socket = io(`?token=${encodeURIComponent(localStorage.getItem("token"))}`);
 const main = document.querySelector("main");
 
 // Update User Count
@@ -18,7 +18,7 @@ form.onsubmit = e => {
 // Get Username
 fetch("/username", {
     headers: {
-        Authorization: "archie"
+        Authorization: localStorage.getItem("token")
     }
 }).then(async res => {
     document.querySelector("footer .username").innerText = await res.text();
