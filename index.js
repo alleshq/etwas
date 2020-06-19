@@ -12,11 +12,9 @@ app.use(express.static(`${__dirname}/static`));
 
 // Socket Auth
 io.use((socket, next) => {
-    const {id, username} = auth(socket.handshake.query.token);
-    if (!id) return next(new Error("Authentication Error"));
-    socket.userId = id;
-    socket.username = username;
-    next();
+    socket.username = auth(socket.handshake.query.token);
+    if (socket.username) next();
+    else next(new Error("Authentication Error"));
 });
 
 // Socket Connection
@@ -43,14 +41,11 @@ io.on("connection", socket => {
 // Authentication with token
 const auth = token => {
     if (typeof token !== "string") return;
-    return {
-        id: token,
-        username: token
-    };
+    return token;
 };
 
 // Username endpoint
 app.get("/username", (req, res) => {
-    const {username} = auth(req.headers.authorization);
+    const username = auth(req.headers.authorization);
     res.status(username ? 200 : 401).send(username ? username : "badAuthorization");
 });
