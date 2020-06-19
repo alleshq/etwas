@@ -1,0 +1,16 @@
+version: "3.4"
+
+services:
+  main:
+    build: .
+    restart: always
+    ports:
+        - 127.0.0.1:3000:3000
+    environment:
+        - DB_HOST=DB_HOST
+        - DB_NAME=DB_NAME
+        - DB_USERNAME=DB_USERNAME
+        - DB_PASSWORD=DB_PASSWORD
+        - ALLES_ID=ALLES_ID
+        - ALLES_SECRET=ALLES_SECRET
+        - JWT_SECRET=JWT_SECRET
