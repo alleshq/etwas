@@ -24,7 +24,7 @@ fetch("/username", {
 });
 
 // User Count Update
-socket.on("user count", (username, count, leave) => {
+socket.on("user count", (username, color, count, leave) => {
     updateUserCount(count);
 });
 

@@ -19,12 +19,12 @@ io.use((socket, next) => {
 
 // Socket Connection
 io.on("connection", socket => {
-    // Change User Count
-    userCount++;
-    io.emit("user count", socket.username, userCount, false);
-
     // Set Color
     socket.color = (Math.random()*0xFFFFFF<<0).toString(16);
+    
+    // Change User Count
+    userCount++;
+    io.emit("user count", socket.username, socket.color, userCount, false);
 
     // Message
     socket.on("message", message => {
@@ -34,7 +34,7 @@ io.on("connection", socket => {
     // Leave
     socket.on("disconnect", () => {
         userCount--;
-        io.emit("user count", socket.username, userCount, true);
+        io.emit("user count", socket.username, socket.color, userCount, true);
     });
 });
 
