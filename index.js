@@ -39,9 +39,12 @@ io.on("connection", socket => {
 });
 
 // Authentication with token
+const jwt = require("jsonwebtoken");
 const auth = token => {
     if (typeof token !== "string") return;
-    return token;
+    try {
+        return jwt.verify(token, process.env.JWT_SECRET).username;
+    } catch (err) {}
 };
 
 // Username endpoint
@@ -52,7 +55,6 @@ app.get("/username", (req, res) => {
 
 // OAuth callback
 const axios = require("axios");
-const jwt = require("jsonwebtoken");
 app.get("/token", async (req, res) => {
     try {
         // Get Access Token
@@ -76,8 +78,7 @@ app.get("/token", async (req, res) => {
 
         // Generate JWT
         res.send(jwt.sign({username}, process.env.JWT_SECRET, {expiresIn: "1d"}));
-    } catch (e) {
-        console.log(e);
+    } catch (err) {
         res.status(500).send("internalError");
     }
 });
