@@ -40,6 +40,7 @@ socket.on("user count", (username, color, count, leave) => {
 
 // Message
 socket.on("message", (username, color, message) => {
+    // Create new message element
     const p = document.createElement("p");
     p.innerText = `: ${message}`;
     const span = document.createElement("span");
@@ -47,4 +48,8 @@ socket.on("message", (username, color, message) => {
     span.style.color = `#${color}`;
     p.prepend(span);
     main.append(p);
+
+    // Remove old messages
+    const messages = main.querySelectorAll("p");
+    if (messages.length > 100) messages[0].remove();
 });
