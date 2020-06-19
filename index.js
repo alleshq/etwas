@@ -28,6 +28,11 @@ io.on("connection", socket => {
     // Set Color
     socket.color = (Math.random()*0xFFFFFF<<0).toString(16);
 
+    // Message
+    socket.on("message", message => {
+        io.emit("message", socket.username, socket.color, message);
+    });
+
     // Leave
     socket.on("disconnect", () => {
         userCount--;

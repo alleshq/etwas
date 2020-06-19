@@ -11,7 +11,7 @@ form.onsubmit = e => {
     const message = input.value.trim();
     input.value = "";
     if (!message) return;
-    console.log(message);
+    socket.emit("message", message);
 };
 
 // Get Username
@@ -26,4 +26,9 @@ fetch("/username", {
 // User Count Update
 socket.on("user count", (username, count, leave) => {
     updateUserCount(count);
+});
+
+// Message
+socket.on("message", (username, color, message) => {
+    console.log(`@${username}#${color}: ${message}`);
 });
