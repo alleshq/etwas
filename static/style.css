@@ -18,10 +18,17 @@ a {
 
 main {
     flex-grow: 1;
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    justify-content: end;
 }
 
 main p {
     color: #444444;
+    word-break: break-all;
+    margin: 5px 0;
 }
 
 main p.system {
