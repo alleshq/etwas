@@ -49,3 +49,35 @@ app.get("/username", (req, res) => {
     const username = auth(req.headers.authorization);
     res.status(username ? 200 : 401).send(username ? username : "badAuthorization");
 });
+
+// OAuth callback
+const axios = require("axios");
+const jwt = require("jsonwebtoken");
+app.get("/token", async (req, res) => {
+    try {
+        // Get Access Token
+        const {access_token} = (await axios.post("https://api.alles.cx/v1/token", {
+            code: req.headers.authorization,
+            grant_type: "authorization_code",
+            redirect_uri: process.env.REDIRECT_URI ? process.env.REDIRECT_URI : "https://etwas.alles.cx/cb.html"
+        }, {
+            auth: {
+                username: process.env.ALLES_ID,
+                password: process.env.ALLES_SECRET
+            }
+        })).data;
+
+        // Get Username
+        const {username} = (await axios.get("https://api.alles.cx/v1/me", {
+            headers: {
+                authorization: `Bearer ${access_token}`
+            }
+        })).data;
+
+        // Generate JWT
+        res.send(jwt.sign({username}, process.env.JWT_SECRET, {expiresIn: "1d"}));
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("internalError");
+    }
+});
