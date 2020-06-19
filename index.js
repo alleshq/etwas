@@ -9,19 +9,19 @@ server.listen(8080, () => console.log("Server is listening..."));
 app.use(express.static(`${__dirname}/static`));
 
 // Socket.io
-io.on("connection", socket => {
-    socket.on("add user", token => {
-        const username = auth(token);
-        if (!username) return;
+io.use((socket, next) => {
+    socket.username = auth(socket.handshake.query.token);
+    if (!socket.username) return next(new Error("Authentication Error"));
+    socket.color = (Math.random()*0xFFFFFF<<0).toString(16);
+    next();
+});
 
-        socket.username = username;
-        socket.color = (Math.random()*0xFFFFFF<<0).toString(16);
-        io.emit("user joined", username);
-    });
+io.on("connection", socket => {
+    console.log(socket.username);
 });
 
 // Authentication with token
 const auth = token => {
     if (typeof token !== "string") return;
-    return "archie";
+    return token;
 };

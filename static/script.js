@@ -1,4 +1,5 @@
 let userCount = 0;
+const socket = io("?token=archie");
 
 // UI changes
 const updateUserCount = () => document.querySelector("footer .userCount").innerText = `${userCount} user${userCount === 1 ? "" : "s"}`;
