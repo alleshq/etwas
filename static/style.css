@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+    font-family: Inter;
+}
+
+a {
+    color: inherit;
+}
+
+.container {
+    width: 800px;
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    background: #f0f0f0;
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+form {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+input, button {
+    border: none;
+    padding: 10px;
+    font-family: Inter;
+}
+
+input {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    flex-grow: 1;
+}
+
+button {
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background: #23529f;
+    color: #ffffff;
+}
+
+footer p {
+    margin: 0;
+    font-size: 12px;
+    color: #444444;
+}
