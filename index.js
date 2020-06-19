@@ -30,3 +30,9 @@ const auth = token => {
     if (typeof token !== "string") return;
     return token;
 };
+
+// Username endpoint
+app.get("/username", (req, res) => {
+    const username = auth(req.headers.authorization);
+    res.status(username ? 200 : 401).send(username ? username : "badAuthorization");
+});

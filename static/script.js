@@ -1,8 +1,7 @@
 const socket = io("?token=archie");
 
-// UI changes
+// Update User Count
 const updateUserCount = count => document.querySelector("footer .userCount").innerText = `${count} user${count === 1 ? "" : "s"}`;
-const setUsername = username => document.querySelector("footer .username").innerText = username;
 
 // Form Submit
 const form = document.querySelector("form");
@@ -14,6 +13,15 @@ form.onsubmit = e => {
     if (!message) return;
     console.log(message);
 };
+
+// Get Username
+fetch("/username", {
+    headers: {
+        Authorization: "archie"
+    }
+}).then(async res => {
+    document.querySelector("footer .username").innerText = await res.text();
+});
 
 // User Join
 socket.on("user join", (username, count) => {
