@@ -7,10 +7,6 @@ services:
     ports:
         - 127.0.0.1:8080:8080
     environment:
-        - DB_HOST=DB_HOST
-        - DB_NAME=DB_NAME
-        - DB_USERNAME=DB_USERNAME
-        - DB_PASSWORD=DB_PASSWORD
         - ALLES_ID=ALLES_ID
         - ALLES_SECRET=ALLES_SECRET
         - JWT_SECRET=JWT_SECRET
