@@ -28,6 +28,8 @@ io.on("connection", socket => {
 
     // Message
     socket.on("message", message => {
+        message = message.trim();
+        message = message.length > 500 ? `${message.substr(0, 497)}...` : message;
         io.emit("message", socket.username, socket.color, message);
     });
 
