@@ -21,7 +21,8 @@ fetch("/username", {
         Authorization: localStorage.getItem("token")
     }
 }).then(async res => {
-    document.querySelector("footer .username").innerText = await res.text();
+    if (res.status === 200) document.querySelector("footer .username").innerText = await res.text();
+    else location.href = `https://alles.cx/authorize?client_id=10caa63a-28af-4b3e-8eeb-d6c6e4f210c2&redirect_uri=${encodeURIComponent(`${location.protocol}//${location.host}/cb.html`)}&response_type=code`;
 });
 
 // User Count Update
