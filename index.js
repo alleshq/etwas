@@ -1,3 +1,4 @@
+const bans = require("./bans");
 let userCount = 0;
 
 // HTTP Server
@@ -13,7 +14,7 @@ app.use(express.static(`${__dirname}/static`));
 // Socket Auth
 io.use((socket, next) => {
     socket.username = auth(socket.handshake.query.token);
-    if (socket.username) next();
+    if (socket.username && !bans.includes(socket.username)) next();
     else next(new Error("Authentication Error"));
 });
 
