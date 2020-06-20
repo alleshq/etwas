@@ -36,6 +36,9 @@ socket.on("user count", (username, color, count, leave) => {
     span.style.color = `#${color}`;
     p.prepend(span);
     main.append(p);
+
+    // Scroll
+    main.scrollTop = main.scrollHeight;
 });
 
 // Message
